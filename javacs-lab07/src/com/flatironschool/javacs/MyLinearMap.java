@@ -122,13 +122,14 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 	@Override
 	public V put(K key, V value) {
         Entry entry = new Entry(key, value);
-		if (!containsKey(entry)) {
+		Entry old_entry = findEntry(key);
+		if (old_entry == null) {
 			entries.add(entry);
 			return value;
 		} else {
-			Entry existing = findEntry(entry);
-			existing.setValue(value);
-			return existing.getValue();
+			V old_value = old_entry.getValue();
+			old_entry.setValue(value);
+			return old_value;
 		}
 	}
 
